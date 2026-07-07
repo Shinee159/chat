@@ -1,0 +1,181 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum MessageRole {
+  user
+  assistant
+  system
+}
+
+enum GenerationType {
+  chat
+  image
+  video
+  audio
+  music
+  model3d
+}
+
+enum GenerationStatus {
+  queued
+  success
+  failed
+}
+
+model User {
+  id              String           @id @default(cuid())
+  name            String
+  email           String           @unique
+  passwordHash    String
+  avatarUrl       String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  authSessions    AuthSession[]
+  aiSessions      AiSession[]
+  messages        Message[]
+  generations     Generation[]
+  promptTemplates PromptTemplate[]
+  usageLogs       UsageLog[]
+  preference      UserPreference?
+}
+
+model AuthSession {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userAgent String?
+  ip        String?
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model UserPreference {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accent         String   @default("#6366f1")
+  defaultChat    String?  @default("openai")
+  defaultImage   String?  @default("flux")
+  defaultVideo   String?  @default("veo")
+  defaultAudio   String?  @default("tts-1")
+  defaultMusic   String?  @default("elevenmusic")
+  defaultModel3d String?  @default("trellis-2-low")
+  settings       String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model AiSession {
+  id          String         @id @default(cuid())
+  userId      String
+  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  type        GenerationType @default(chat)
+  modelId     String?
+  isPinned    Boolean        @default(false)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  messages    Message[]
+  generations Generation[]
+
+  @@index([userId, updatedAt])
+  @@index([userId, isPinned, updatedAt])
+}
+
+model Message {
+  id        String      @id @default(cuid())
+  userId    String
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sessionId String
+  session   AiSession   @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  role      MessageRole
+  content   String
+  modelId   String?
+  metadata  String?
+  createdAt DateTime    @default(now())
+
+  @@index([sessionId, createdAt])
+  @@index([userId, createdAt])
+}
+
+model Generation {
+  id             String           @id @default(cuid())
+  userId         String
+  user           User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sessionId      String?
+  session        AiSession?       @relation(fields: [sessionId], references: [id], onDelete: SetNull)
+  type           GenerationType
+  title          String?
+  prompt         String
+  negativePrompt String?
+  modelId        String
+  provider       String           @default("pollinations")
+  assetUrl       String?
+  mimeType       String?
+  status         GenerationStatus @default(success)
+  isFavorite     Boolean          @default(false)
+  metadata       String?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  @@index([userId, createdAt])
+  @@index([userId, type, createdAt])
+  @@index([userId, isFavorite, createdAt])
+  @@index([sessionId])
+}
+
+model PromptTemplate {
+  id        String         @id @default(cuid())
+  userId    String
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  mode      GenerationType
+  prompt    String
+  isPinned  Boolean        @default(false)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+
+  @@index([userId, mode, updatedAt])
+}
+
+model UsageLog {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type       String
+  modelId    String?
+  inputChars Int      @default(0)
+  outputChars Int     @default(0)
+  status     String
+  durationMs Int?
+  metadata   String?
+  createdAt  DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@index([userId, type, createdAt])
+}
+
+model ModelCache {
+  id           String   @id @default(cuid())
+  source       String
+  type         String
+  modelId      String
+  name         String
+  capabilities String?
+  raw          String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([source, modelId])
+  @@index([source, type])
+}
