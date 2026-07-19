@@ -33,7 +33,7 @@ datasource db {
 - Session login per user/account
 - Dashboard statistik
 - Chat AI
-- Generate gambar, video, audio/TTS, musik, dan 3D
+- Generate gambar, video, audio/TTS, musik
 - Session chat/generate per akun
 - Koleksi hasil generate per akun
 - Favorite, rename, delete, download hasil
