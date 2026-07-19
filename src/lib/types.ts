@@ -10,6 +10,8 @@ export type UiModel = {
   outputModalities?: string[];
   supportedEndpoints?: string[];
   reasoning?: boolean;
+  search?: boolean;
+  code?: boolean;
   tools?: boolean;
   contextLength?: number;
 };
