@@ -1,4 +1,4 @@
-export type ModelKind = "chat" | "image" | "video" | "audio" | "music" | "model3d" | "embedding" | "realtime";
+export type ModelKind = "chat" | "image" | "video" | "audio" | "music" | "embedding" | "realtime";
 
 export type UiModel = {
   id: string;
@@ -24,7 +24,7 @@ export type ChatPayload = {
 };
 
 export type GeneratePayload = {
-  type: "image" | "video" | "audio" | "music" | "model3d";
+  type: "image" | "video" | "audio" | "music";
   prompt: string;
   negativePrompt?: string;
   modelId: string;
