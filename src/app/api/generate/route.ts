@@ -6,7 +6,7 @@ import { buildMediaRequest } from "@/lib/pollinations";
 import { checkRateLimit, rateLimitResponse } from "@/lib/rate-limit";
 
 const schema = z.object({
-  type: z.enum(["image", "video", "audio", "music", "model3d"]),
+  type: z.enum(["image", "video", "audio", "music"]),
   prompt: z.string().min(1).max(32000),
   negativePrompt: z.string().max(12000).optional(),
   modelId: z.string().min(1),
@@ -24,7 +24,7 @@ const schema = z.object({
   title: z.string().max(120).optional()
 });
 
-const limitByType: Record<string, number> = { image: 25, video: 8, audio: 25, music: 10, model3d: 8 };
+const limitByType: Record<string, number> = { image: 25, video: 8, audio: 25, music: 10 };
 
 export async function POST(req: Request) {
   const startedAt = Date.now();
