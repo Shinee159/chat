@@ -5,7 +5,7 @@ import { requireUser } from "@/lib/auth";
 
 const schema = z.object({
   name: z.string().min(1).max(80).optional(),
-  mode: z.enum(["chat", "image", "video", "audio", "music", "model3d"]).optional(),
+  mode: z.enum(["chat", "image", "video", "audio", "music"]).optional(),
   prompt: z.string().min(1).max(8000).optional(),
   isPinned: z.boolean().optional()
 });
