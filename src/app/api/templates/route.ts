@@ -6,7 +6,7 @@ import { DEFAULT_TEMPLATES } from "@/lib/prompt-templates";
 
 const schema = z.object({
   name: z.string().min(1).max(80),
-  mode: z.enum(["chat", "image", "video", "audio", "music", "model3d"]),
+  mode: z.enum(["chat", "image", "video", "audio", "music"]),
   prompt: z.string().min(1).max(8000),
   isPinned: z.boolean().optional()
 });
