@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Kreasi AI",
-  description: "Chat AI dan generator gambar, video, audio, musik, dan 3D dengan session per akun."
+  description: "Chat AI dan generator gambar, video, audio, musik dengan session per akun."
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
