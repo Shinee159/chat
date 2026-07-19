@@ -1,13 +1,13 @@
 "use client";
 
 import { FormEvent, KeyboardEvent, useEffect, useMemo, useState } from "react";
-import { Box, Bot, Check, Copy, ImageIcon, Loader2, MessageSquarePlus, MoreHorizontal, Music, Pin, PinOff, RefreshCcw, Search, Send, Star, Trash2, Video, Volume2, Wand2 } from "lucide-react";
+import { Bot, Check, Copy, ImageIcon, Loader2, MessageSquarePlus, MoreHorizontal, Music, Pin, PinOff, RefreshCcw, Search, Send, Star, Trash2, Video, Volume2, Wand2 } from "lucide-react";
 import clsx from "clsx";
 import AppShell from "./AppShell";
 import { VOICES } from "@/lib/fallback-models";
 import type { UiModel } from "@/lib/types";
 
-type SessionMode = "chat" | "image" | "video" | "audio" | "music" | "model3d";
+type SessionMode = "chat" | "image" | "video" | "audio" | "music";
 
 type SessionRow = {
   id: string;
@@ -28,7 +28,7 @@ type MessageRow = {
 
 type GenerationRow = {
   id: string;
-  type: "image" | "video" | "audio" | "music" | "model3d";
+  type: "image" | "video" | "audio" | "music";
   title?: string;
   prompt: string;
   negativePrompt?: string;
@@ -51,8 +51,7 @@ const modes: Array<{ id: SessionMode; label: string; icon: any; hint: string }> 
   { id: "image", label: "Gambar", icon: ImageIcon, hint: "Prompt ke gambar statis." },
   { id: "video", label: "Video", icon: Video, hint: "Prompt ke video pendek." },
   { id: "audio", label: "Audio", icon: Volume2, hint: "Text to speech / voice over." },
-  { id: "music", label: "Musik", icon: Music, hint: "Prompt ke musik atau backsound." },
-  { id: "model3d", label: "3D", icon: Box, hint: "Prompt ke asset 3D/GLB." }
+  { id: "music", label: "Musik", icon: Music, hint: "Prompt ke musik atau backsound." }
 ];
 
 function defaultModelFor(mode: string) {
@@ -60,7 +59,6 @@ function defaultModelFor(mode: string) {
   if (mode === "video") return "veo";
   if (mode === "audio") return "tts-1";
   if (mode === "music") return "elevenmusic";
-  if (mode === "model3d") return "trellis-2-low";
   return "openai";
 }
 
@@ -89,11 +87,6 @@ const examples: Record<SessionMode, string[]> = {
     "Upbeat modern tech intro, clean electronic, catchy, cocok untuk aplikasi AI.",
     "Lo-fi calm study background, piano lembut, beat ringan, loopable.",
     "Cinematic corporate background, inspiring, soft percussion, premium mood."
-  ],
-  model3d: [
-    "Low-poly robot assistant, friendly face, orange accent, game-ready asset.",
-    "Minimal futuristic camera icon 3D, clean topology, PBR material.",
-    "3D mascot aplikasi AI, simple, round shapes, neutral pose."
   ]
 };
 
@@ -487,7 +480,7 @@ export default function GeneratorWorkspace() {
                     <input type="checkbox" checked={instrumental} onChange={(e) => setInstrumental(e.target.checked)} /> Instrumental / tanpa audio tambahan
                   </label>
                 )}
-                {(mode === "image" || mode === "video" || mode === "model3d") && (
+                {(mode === "image" || mode === "video") && (
                   <input className="input md:col-span-2" value={negativePrompt} onChange={(e) => setNegativePrompt(e.target.value)} placeholder="Negative prompt opsional: blur, watermark, teks, low quality..." />
                 )}
               </div>
