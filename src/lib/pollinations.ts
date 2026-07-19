@@ -163,6 +163,8 @@ function normalizeModel(raw: any, endpoint: string): UiModel | null {
       ? [endpoint]
       : normalizeArray(raw?.supported_endpoints || raw?.supportedEndpoints || raw?.endpoints) || [endpoint],
     reasoning: isStringModel ? false : Boolean(raw?.reasoning || raw?.capabilities?.reasoning),
+    search: isStringModel ? false : Boolean(raw?.search || raw?.capabilities?.web_search),
+    code: isStringModel ? false : Boolean(raw?.code || raw?.capabilities?.code_execution),
     tools: isStringModel ? false : Boolean(raw?.tools || raw?.capabilities?.tools),
     contextLength: !isStringModel && typeof raw?.context_length === "number" ? raw.context_length : undefined
   };
