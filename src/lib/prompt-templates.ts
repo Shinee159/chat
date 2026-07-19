@@ -32,10 +32,5 @@ export const DEFAULT_TEMPLATES: Array<{ name: string; mode: GeneratePayload["typ
     name: "Musik promosi modern",
     mode: "music",
     prompt: "Musik instrumental modern untuk promosi digital, upbeat, clean, catchy, durasi pendek, mood: "
-  },
-  {
-    name: "Objek 3D game asset",
-    mode: "model3d",
-    prompt: "Game-ready 3D asset, low-poly clean topology, PBR material, centered object, detail: "
   }
 ];
