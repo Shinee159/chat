@@ -12,7 +12,7 @@ const branches = [
     icon: Bot,
     href: "/chat",
     y: 34,
-    features: ["Obrolan AI", "Pembuat Gambar", "Pembuat Video", "Pembuat Musik", "Audio", "3D"],
+    features: ["Obrolan AI", "Pembuat Gambar", "Pembuat Video", "Pembuat Musik", "Audio"],
     featureIcons: [Bot, ImageIcon, Video, Music, Sparkles, Database]
   },
   {
