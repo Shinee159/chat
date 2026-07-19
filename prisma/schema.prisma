@@ -19,7 +19,6 @@ enum GenerationType {
   video
   audio
   music
-  model3d
 }
 
 enum GenerationStatus {
