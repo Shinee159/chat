@@ -53,7 +53,7 @@ export default function AuthShell() {
               <Sparkles size={16} /> Struktur Kreasi AI
             </div>
             <h1 className="max-w-3xl text-4xl font-black tracking-tight md:text-6xl">
-              Website chat AI dengan generator gambar, video, musik, audio, dan 3D.
+              Website chat AI dengan generator gambar, video, musik, audio.
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-slate-300 md:text-lg">
               Satu akun menyimpan session percakapan, riwayat prompt, model yang dipakai, dan koleksi hasil generate.
