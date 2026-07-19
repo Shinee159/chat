@@ -5,7 +5,7 @@ import { requireUser } from "@/lib/auth";
 
 const createSchema = z.object({
   title: z.string().min(1).max(120).optional(),
-  type: z.enum(["chat", "image", "video", "audio", "music", "model3d"]).default("chat"),
+  type: z.enum(["chat", "image", "video", "audio", "music"]).default("chat"),
   modelId: z.string().optional()
 });
 
