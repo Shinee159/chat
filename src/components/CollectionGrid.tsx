@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Box, Download, ImageIcon, Music, RefreshCcw, Search, Star, Trash2, Video, Volume2 } from "lucide-react";
+import { Download, ImageIcon, Music, RefreshCcw, Search, Star, Trash2, Video, Volume2 } from "lucide-react";
 import clsx from "clsx";
 import AppShell from "./AppShell";
 
 type Generation = {
   id: string;
-  type: "image" | "video" | "audio" | "music" | "model3d";
+  type: "image" | "video" | "audio" | "music";
   title?: string;
   prompt: string;
   negativePrompt?: string;
@@ -21,11 +21,10 @@ const iconMap: Record<Generation["type"], any> = {
   image: ImageIcon,
   video: Video,
   audio: Volume2,
-  music: Music,
-  model3d: Box
+  music: Music
 };
 
-const filters = ["all", "image", "video", "audio", "music", "model3d"] as const;
+const filters = ["all", "image", "video", "audio", "music"] as const;
 
 export default function CollectionGrid() {
   const [items, setItems] = useState<Generation[]>([]);
